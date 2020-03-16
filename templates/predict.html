@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Прогнозирование содержимого{% endblock title %}
+
+{% block active1 %}active{% endblock active1%}
+
+
+{% block content %}
+    <div id="content">
+    {% if not file_url %}
+        <h3><center>Прогнозирование содержимого</center></h3>
+        <p>Система попробует "угадать", какой объект представлен на загруженном вами изображении</p>
+        <p>Загрузите изображение, потом нажмите кнопку "Начать обработку!". Обработка информации и выдача результата могут занять какое-то время</p>
+        <form method='post' enctype="multipart/form-data" >
+            {% csrf_token %}
+            <p><center>{{ form }}</center></p>
+            <p><center><input class="btn btn-warning" type="submit" value="Начать обработку!"></center></p>
+        </form>
+    {% endif %}
+    {% if file_url %}
+        <div class="alert alert-success" role="alert">Обработка завершена.</div>
+            <p>Ниже представлены результаты. В первой колонке указан объект, предполагаемо расположенный на изображении, во второй колонке
+            указана вероятность того, что на картинке изображен данный объект</p>
+            <p><center><a href=""><button type="button" class="btn btn-warning">Попробовать снова</button></a></center></p>
+        <table>
+            <td>
+                <img src="{{ file_url }}" width="400 px"/>
+            </td>
+            <td>
+                <table border = "1">
+                    <tr><th>Объект</th><th>Вероятность</th></tr>
+                    {% for prediction, prob in probs.items %}
+                        <tr><td>{{ prediction }}</td><td>{{ prob }}</td></tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </table>
+    {% endif %}
+    </div>
+{% endblock content %}

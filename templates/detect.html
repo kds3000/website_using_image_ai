@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Поиск объектов{% endblock title %}
+
+{% block active2 %}active{% endblock active2%}
+
+{% block content %}
+    <div id="content">
+    {% if not output_url %}
+        <h3><center>Поиск объектов</center></h3>
+        <p>Система просканирует загруженное вами изображение и отметит на нем все объекты, которые она сможет обнаружить</p>
+        <p>Загрузите изображение, потом нажмите кнопку "Начать обработку!". Обработка информации и выдача результата могут занять какое-то время</p>
+        <form method='post' enctype="multipart/form-data">
+            {% csrf_token %}
+            <p><center>{{ form }}</center></p>
+            <p><center><input class="btn btn-warning" type="submit" value="Начать обработку!"></p></center>
+        </form>
+    {% endif %}
+
+        {% if output_url %}
+            <div class="alert alert-success" role="alert">Обработка завершена.</div>
+            <p>Если вам не удается рассмотреть результаты из-за размера изображения, попробуйте кликнуть на него правой кнопкой мыши и нажать "открыть в новой вкладке"</p>
+            <p><center><a href=""><button type="button" class="btn btn-warning">Попробовать снова</button></a></center></p>
+            <p><img src="{{ output_url }}" id="content"/></p>
+
+        {% endif %}
+    </div>
+
+{% endblock content %}

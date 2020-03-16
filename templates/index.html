@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock title %}
+
+{% block main_image %}
+    <section id="slider"><a href="#"><img src="../static/images/demo/image11.jpg" alt=""></a></section>
+{% endblock main_image %}
+
+{% block content %}
+    <div id="content">
+      <article>
+        <h2>Прогнозирование содержимого</h2>
+        <p>Система попробует "угадать", какой объект представлен на загруженном вами изображении</p>
+
+        <footer class="more"><a href="{% url 'image_prediction:index' %}">Попробовать &raquo;</a></footer>
+      </article>
+      <article class="last">
+        <h2>Поиск объектов</h2>
+        <p>Система просканирует загруженное вами изображение и отметит на нем все объекты, которые
+            она сможет обнаружить</p>
+        <footer class="more"><a href="{% url 'object_detection:index' %}">Попробовать &raquo;</a></footer>
+      </article>
+    </div>
+{% endblock content %}
+

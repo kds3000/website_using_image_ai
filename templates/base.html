@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+<title>{% block title %}{% endblock title %}</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../static/styles/layout.css" type="text/css">
+<link rel="stylesheet" href="../static/styles/bootstrap.css" />
+<script src="../static/scripts/jquery-3.4.1.js"></script>
+<script src="../static/scripts/bootstrap.js"></script>
+<!--[if lt IE 9]><script src="../static/scripts/html5shiv.js"></script><![endif]-->
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="{% url 'index' %}" style="text-decoration:none">Обнаружение объектов</a></h1>
+      <h2>При помощи библиотеки ImageAI</h2>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'image_prediction:index' %}" class="btn btn-primary {% block active1 %}{% endblock active1%}">Прогнозирование содержимого</a></li>
+        <li class="last"><a href="{% url 'object_detection:index' %}" class="btn btn-primary {% block active2 %}{% endblock active2%}">Поиск объектов</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    {% block main_image %}{% endblock main_image %}
+    <!-- content body -->
+    <aside id="left_column">
+      <h2 class="title">Категории</h2>
+        <div class="list-group">
+      <nav>
+        <ul>
+          <li><a href="{% url 'image_prediction:index' %}" class="list-group-item list-group-item-action">Прогнозирование содержимого</a></li>
+          <li class="last"><a href="{% url 'object_detection:index' %}" class="list-group-item list-group-item-action">Поиск объектов</a></li>
+        </ul>
+      </nav>
+        </div>
+      <!-- /nav -->
+      <!-- /section -->
+    </aside>
+    <!-- main content -->
+    {% block content %}
+    {% endblock content %}
+    <!-- / content body -->
+  </div>
+</div>
+<!-- footer -->
+</body>
+</html>
