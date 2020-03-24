@@ -1,9 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from image_prediction.models import Image
+from django.shortcuts import render
 from imageai.Prediction import ImagePrediction
 from django.core.files.storage import FileSystemStorage
-import os
 from django import forms
 from translate import Translator
 
@@ -24,7 +21,6 @@ def index(request):
                 'probs': probs,
                 'file_url': fs.url(name),
             }
-
             return render(request, 'predict.html', context)
     else:
         form = ImageUploadForm()

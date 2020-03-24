@@ -34,10 +34,10 @@ def add_search_results_to_context(request, context, access_token):
 
     #метод позволяет обращаться к методам API как к обычным классам
     vk = vk_session.get_api()
-    response = vk.friends.get(fields='count')
 
     #Имя, по которому ведется поиск
     searching_for = request.POST.get('search')
+    response = vk.users.search(q=searching_for, from_list='friends')
     context['search_results'] = []
 
     for item in response['items']:
@@ -93,7 +93,7 @@ def logout(request):
     access_token пользователя из request.session.
     """
     request.session.flush()
-    return render(request, 'vk_logout.html')
+    return redirect(MAIN_URL)
 
 
 
