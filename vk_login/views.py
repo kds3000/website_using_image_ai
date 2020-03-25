@@ -37,14 +37,13 @@ def add_search_results_to_context(request, context, access_token):
 
     #Имя, по которому ведется поиск
     searching_for = request.POST.get('search')
-    response = vk.users.search(q=searching_for, from_list='friends')
+    response = vk.friends.search(q=searching_for)
     context['search_results'] = []
 
     for item in response['items']:
-        if item['first_name'] == searching_for:
-            name = '{} {}'.format(item['first_name'], item['last_name'])
-            url = 'https://vk.com/id{}'.format(item['id'])
-            context['search_results'].append({'name': name, 'url': url})
+        name = '{} {}'.format(item['first_name'], item['last_name'])
+        url = 'https://vk.com/id{}'.format(item['id'])
+        context['search_results'].append({'name': name, 'url': url})
 
     #Индикатор того, что поиск был произведен. Нужен для добавления блока на странице.
     context['search_complete'] = True
