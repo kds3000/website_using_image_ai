@@ -53,18 +53,23 @@ def add_friends_and_photo_to_context(request, context, access_token):
     """Функция, добавляющая в контекст количество друзей авторизированного
     пользователя, а также ссылку на аватарку пользователя
     """
-    vk_session = start_session(access_token)
+    try:
+        vk_session = start_session(access_token)
 
-    #метод позволяет обращаться к методам API как к обычным классам
-    vk = vk_session.get_api()
+        #метод позволяет обращаться к методам API как к обычным классам
+        vk = vk_session.get_api()
 
-    response = vk.friends.get(fields='count')
-    context['count'] = response['count']
+        response = vk.friends.get(fields='count')
+        context['count'] = response['count']
 
-    #Контакт возвращает список словарей (по словарю на каждого пользователя)
-    response = vk.users.get(fields='photo_200')
-    #В данном запросе вернется список из одного словаря, поэтому берем индекс [0]
-    context['photo'] = response[0]['photo_200']
+        #Контакт возвращает список словарей (по словарю на каждого пользователя)
+        response = vk.users.get(fields='photo_200')
+        #В данном запросе вернется список из одного словаря, поэтому берем индекс [0]
+        context['photo'] = response[0]['photo_200']
+        
+    # Перехват исключения в случае попытки пользователя зайти с устаревшим токеном
+    except vk_api.exceptions.ApiError:
+        logout(request)
 
 def start_session(access_token=None):
     """
