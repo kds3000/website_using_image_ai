@@ -33,19 +33,34 @@ body{font-family: Roboto;}blockquote{border-color: #4ea2e3;}div[submit-success] 
         <div class="mbr-row mbr-jc-c">
             <div class="mbr-col-lg-8 mbr-col-sm-12 mbr-col-md-12 mbr-flex mbr-column">
                 <h1 class="mbr-fonts-style align-center mbr-bold mbr-pt-1 mbr-pb-3 display-1">
-                    Добро пожаловать!
+                    Добро пожаловать{% if name %}, {{ name }}{% endif %}!
                 </h1>
-                {% if photo %}<amp-img src={{ photo }} alt="" width="200" height="200" class="mobirise-loader mbr-m-auto align-center"></amp-img>{% endif %}
+
                 {% if count %}
                 <h3 class="mbr-fonts-style align-center mbr-pt-1 mbr-pb-3 display-5">
                     Количество ваших друзей: {{ count }}
                 </h3>
                 {% endif %}
+                <table>
+                    <td>
+                        {% if photo %}<amp-img src={{ photo }} alt="" width="200" height="200" class="mobirise-loader mbr-m-auto align-center"></amp-img>{% endif %}
+                    </td>
+                    <td>
+                        {% if friends_for_index %}
+                        <h4>Пять ваших случайных друзей: </h4></br>
+                        <ul>
+                            {% for item in friends_for_index %}
+                                <li class="mbr-pb-2"><a href={{ item.url }}><strong>{{ item.name }}</strong></a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </table>
                 <div class="mbr-text align-center">
                 </div>
                 <div class="mbr-section-btn align-center">
                     {% if not request.session.token%}
-                    <a class="btn btn-md btn-primary display-4" href="https://oauth.vk.com/authorize?client_id=7355560&display=popup&redirect_uri=http://kds3000.pythonanywhere.com/vk_login/&response_type=code&scope=2">Вконтакте вход</a>
+                    <a class="btn btn-md btn-primary display-4" href="https://oauth.vk.com/authorize?client_id=7355560&display=popup&redirect_uri=http://kds3000.pythonanywhere.com/vk_login/&response_type=code&scope=2">Авторизоваться</a>
                     {% else %}
                     <a class="btn btn-md btn-warning display-4" href="http://kds3000.pythonanywhere.com/vk_login/logout/">Выход из учетной записи</a>
                         <div class="mbr-row mbr-jc-c mbr-pt-4">
